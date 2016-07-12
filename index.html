@@ -1,18 +1,33 @@
 <!DOCTYPE html>
-<html ng-app="helloWorld">
+<html ng-app="yellowPages">
 <head>
-	<title>Angularjs</title>
+	<title>Lista Telefonica</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<meta charset=utf-8>
 </head>
-<body>
-	<div ng-controller="helloWorldController">
-		{{ message }}
+<body ng-controller="yellowPagesController">
+	<div class="jumbotron">
+		<h3>{{ app }}</h3>
+		<table ng-show="contacts.length > 0" class="table">
+			<tr>
+				<th>#</th>
+				<th>Nome</th>
+				<th>Telefone</th>
+				<th>Operadora</th>
+			</tr>
+			<tr ng-class="{selected: contact.selected}" ng-repeat="contact in contacts">
+				<th><input type="checkbox" ng-model="contact.selected"></th>
+				<td>{{ contact.name }}</td>
+				<td>{{ contact.phone }}</td>
+				<td>{{ contact.operator.name }}</td>
+			</tr>
+		</table>
+		<hr />
+		<div ng-include="'form.html'"></div>
 	</div>
 </body>
 </html>
-<script type="text/javascript" src="js/angular.js"></script>
-<script type="text/javascript">
-	var app = angular.module('helloWorld', []);
-	app.controller('helloWorldController', ['$scope', function($scope){
-		$scope.message = 'Hello World';
-	}])
-</script>
+<script type="text/javascript" src="js/angularjs/angular.js"></script>
+<script type="text/javascript" src="js/yellowPagesModule.js"></script>
+<script type="text/javascript" src="js/yellowPagesController.js"></script>
