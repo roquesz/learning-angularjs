@@ -17,6 +17,7 @@ app.controller('yellowPagesController', ['$scope', function($scope){
 	{
 		$scope.contacts.push(contact);
 		delete $scope.contact;
+		// $scope.contactForm.$setPristine(); // nao funcionou =(
 	};
 
 	$scope.removeContact = function(contacts)

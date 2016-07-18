@@ -1,10 +1,26 @@
-
-		<input class="form-control" type="text" ng-model="contact.name" placeholder="Nome" />
-		<input class="form-control" type="text" ng-model="contact.phone" placeholder="Telefone" />
-		<select class="form-control" ng-model="contact.operator" ng-op ng-options="operator.name group by operator.category for operator in operators">
-			<option value="">Selecione uma Operadora</option>
-		</select>
-		<button class="btn btn-primary btn-block" ng-disabled="!contact.name || !contact.phone" ng-click="addContact(contact)">Adicionar Contato</button>
+		{{ contactForm.$valid }}
+		{{ contactForm.$invalid }}
+		<form name="contactForm">
+			<input class="form-control" type="text" ng-model="contact.name" name="name" placeholder="Nome" ng-required="true" ng-minlength="10" />
+			<input class="form-control" type="text" ng-model="contact.phone" name="phone" placeholder="Telefone" ng-required="true" ng-pattern="/^\d{4,5}-\d{4}$/" />
+			<select class="form-control" ng-model="contact.operator" name="operator" ng-op ng-options="operator.name group by operator.category for operator in operators">
+				<option value="">Selecione uma Operadora</option>
+			</select>
+		</form>
+		<div ng-show="contactForm.name.$error.required && contactForm.name.$dirty" class="alert alert-danger">
+			Preencha o nome
+		</div>
+		<div ng-show="contactForm.name.$error.minlength" class="alert alert-danger" ng-minlength="10">
+			Nome tem que ser maio que 10 caracteres
+		</div>
+		<div ng-show="contactForm.phone.$error.required && contactForm.phone.$dirty" class="alert alert-danger">
+			Preencha o telefone
+		</div>
+		<div ng-show="contactForm.phone.$error.pattern" class="alert alert-danger">
+			O formato do telefone deve ser 99999-9999
+		</div>
+		<button class="btn btn-primary btn-block" ng-disabled="contactForm.$invalid " ng-click="addContact(contact)">Adicionar Contato</button>
+		<!-- <button class="btn btn-primary btn-block" ng-disabled="!contact.name || !contact.phone" ng-click="addContact(contact)">Adicionar Contato</button> -->
 		<button class="btn btn-danger btn-block" ng-click="removeContact(contacts)" ng-if="isContactSelected(contacts)">Remover Contato</button>
 		<!-- <button class="btn btn-danger btn-block" ng-click="removeContact(contacts)" ng-show="isContactSelected(contacts)">Remover Contato</button> -->
 		<!-- <button class="btn btn-danger btn-block" ng-click="removeContact(contacts)" ng-disabled="!isContactSelected(contacts)">Remover Contato</button> -->
