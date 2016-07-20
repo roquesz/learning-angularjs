@@ -1,18 +1,26 @@
-		{{ contactForm.$valid }}
-		{{ contactForm.$invalid }}
 		<form name="contactForm">
 			<input class="form-control" type="text" ng-model="contact.name" name="name" placeholder="Nome" ng-required="true" ng-minlength="10" />
 			<input class="form-control" type="text" ng-model="contact.phone" name="phone" placeholder="Telefone" ng-required="true" ng-pattern="/^\d{4,5}-\d{4}$/" />
-			<select class="form-control" ng-model="contact.operator" name="operator" ng-op ng-options="operator.name group by operator.category for operator in operators">
+			<select class="form-control" ng-model="contact.operator" name="operator" ng-op ng-options="operator.name + ' (' + (operator.price | currency) + ')'  group by operator.category for operator in operators | orderBy: 'operator.name'">
 				<option value="">Selecione uma Operadora</option>
 			</select>
 		</form>
+		<div ng-messages="contactForm.name.$error" class="alert alert-danger">
+			<div ng-message="required">
+				Preencha o nome
+			</div>
+			<div ng-message="minlength" ng-minlength="10">
+				Nome tem que ser maio que 10 caracteres
+			</div>
+		</div>
+		<!--
 		<div ng-show="contactForm.name.$error.required && contactForm.name.$dirty" class="alert alert-danger">
 			Preencha o nome
 		</div>
 		<div ng-show="contactForm.name.$error.minlength" class="alert alert-danger" ng-minlength="10">
 			Nome tem que ser maio que 10 caracteres
 		</div>
+		-->
 		<div ng-show="contactForm.phone.$error.required && contactForm.phone.$dirty" class="alert alert-danger">
 			Preencha o telefone
 		</div>

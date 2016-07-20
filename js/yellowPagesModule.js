@@ -1,1 +1,1 @@
-var app = angular.module('yellowPages', []);
+var app = angular.module('yellowPages', ['ngMessages']);

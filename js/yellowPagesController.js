@@ -1,16 +1,21 @@
-app.controller('yellowPagesController', ['$scope', function($scope){
+app.controller('yellowPagesController', ['$scope', '$filter', '$http', function($scope, $filter, $http){
 	$scope.app = 'Lista Telefonica';
+	$scope.direction = true;
 	$scope.contacts = [
-		{name: 'Roque', phone: '9999-9999'},
-		{name: 'Jonas', phone: '8888-8888'},
-		{name: 'Carlos', phone: '6666-6666'},
-		{name: 'André', phone: '7777-7777'}
+		{name: $filter('uppercase')('Roque'), phone: '9999-9999',date: new Date(), operator:{"name":"Oi","code":14,"category":"Fixed"}},
+		{name: 'Jonas', phone: '8888-8888',operator:{name: 'Vivo', code: 15, category: 'Mobile'}},
+		{name: 'Carlos', phone: '6666-6666',operator:{"name":"Oi","code":14,"category":"Fixed"}},
+		{name: 'André', phone: '7777-7777',operator:{name: 'Tim', code: 41, category: 'Mobile'}}
 	];
 
+	var loadContacts = function(){
+
+	};
+
 	$scope.operators = [
-		{name: 'Oi', code: 14, category: 'Fixed'},
-		{name: 'Vivo', code: 15, category: 'Mobile'},
-		{name: 'Tim', code: 41, category: 'Mobile'}
+		{name: 'Oi', code: 14, category: 'Fixed', price: 2},
+		{name: 'Vivo', code: 15, category: 'Mobile', price: 1},
+		{name: 'Tim', code: 41, category: 'Mobile', price: 5}
 	];
 
 	$scope.addContact = function(contact)
@@ -37,4 +42,10 @@ app.controller('yellowPagesController', ['$scope', function($scope){
 			return contact.selected;
 		});
 	}
+
+	$scope.orderList = function(column)
+	{
+		$scope.orderColumn = column;
+		$scope.direction = !$scope.direction;
+	};
 }]);
