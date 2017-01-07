@@ -1,22 +1,39 @@
-app.controller('yellowPagesController', ['$scope', '$filter', '$http', function($scope, $filter, $http){
+app.controller('yellowPagesController', ['$scope', '$filter', '$http', function($scope, $filter, $http, PagerService){
 	$scope.app = 'Lista Telefonica';
 	$scope.direction = true;
-	$scope.contacts = [
-		{name: $filter('uppercase')('Roque'), phone: '9999-9999',date: new Date(), operator:{"name":"Oi","code":14,"category":"Fixed"}},
-		{name: 'Jonas', phone: '8888-8888',operator:{name: 'Vivo', code: 15, category: 'Mobile'}},
-		{name: 'Carlos', phone: '6666-6666',operator:{"name":"Oi","code":14,"category":"Fixed"}},
-		{name: 'André', phone: '7777-7777',operator:{name: 'Tim', code: 41, category: 'Mobile'}}
-	];
+	$scope.contacts = [];
+	// $scope.contacts = [
+	// 	{id: 1, name: $filter('uppercase')('Roque'), phone: '9999-9999',date: new Date(), operator:{"name":"Oi","code":14,"category":"Fixed"}},
+	// 	{id: 2, name: 'Jonas', phone: '8888-8888', date: new Date(), operator:{name: 'Vivo', code: 15, category: 'Mobile'}},
+	// 	{id: 3, name: 'Carlos', phone: '6666-6666', date: new Date(), operator:{"name":"Oi","code":14,"category":"Fixed"}},
+	// 	{id: 4, name: 'André', phone: '7777-7777', date: new Date(), operator:{name: 'Tim', code: 41, category: 'Mobile'}}
+	// ];
 
-	var loadContacts = function(){
-
+	var loadContacts = function()
+	{
+		$http.get('http://localhost/learning-angularjs/api/contacts.php').success(
+			function(data, status)
+			{
+				$scope.contacts = data;
+			}
+		);
 	};
 
-	$scope.operators = [
-		{name: 'Oi', code: 14, category: 'Fixed', price: 2},
-		{name: 'Vivo', code: 15, category: 'Mobile', price: 1},
-		{name: 'Tim', code: 41, category: 'Mobile', price: 5}
-	];
+	var loadOperators = function()
+	{
+		$http.get('http://localhost/learning-angularjs/api/operators.php')
+		.success(
+			function(data, status)
+			{
+				$scope.operators = data;
+			}
+		)
+	}
+	// $scope.operators = [
+	// 	{name: 'Oi', code: 14, category: 'Fixed', price: 2.1},
+	// 	{name: 'Vivo', code: 15, category: 'Mobile', price: 1.19},
+	// 	{name: 'Tim', code: 41, category: 'Mobile', price: 5.99}
+	// ];
 
 	$scope.addContact = function(contact)
 	{
@@ -48,4 +65,6 @@ app.controller('yellowPagesController', ['$scope', '$filter', '$http', function(
 		$scope.orderColumn = column;
 		$scope.direction = !$scope.direction;
 	};
+	loadContacts();
+	loadOperators();
 }]);
